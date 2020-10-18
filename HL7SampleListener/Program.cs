@@ -24,7 +24,7 @@ namespace HL7SampleListener
                 Subscriber subscriber = new Subscriber(endPoint);
                 System.Threading.Thread listnerThread = new Thread(new ThreadStart(subscriber.Listen));
                 listnerThread.Start();
-                // Craete another thread for sending HL7 messages
+                // Create another thread for sending HL7 messages
                 // Send Message so that the listening port catches it.
                 Publisher publisher = new Publisher(Localhost, Port);
                 Thread senderThread = new Thread(new ThreadStart(publisher.Send));

@@ -95,7 +95,10 @@ namespace HL7SampleListener
 
                 Message msg = new Message();
                 msg.DeSerializeMessage(data);
-                Console.WriteLine("Ovde stampamo poruku: " + msg);
+
+                
+
+                //Console.WriteLine("Ovde stampamo poruku: " + msg);
                 
                 
                 

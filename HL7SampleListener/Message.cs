@@ -53,13 +53,31 @@ namespace HL7SampleListener
             var segment = new Segment();
             char[] separator = { '\r' };
             var tokens = msg.Split(separator, StringSplitOptions.None);
-
+            Console.WriteLine("Tokeni su: " + tokens.ToString());
             foreach (var item in tokens)
             {
                 //var segment = new Segment();
                 segment.DeSerializeSegment(item.Trim('\n'));
                 Add(segment);
-                //Console.WriteLine("Token: " + item);
+                if (item.Contains("PID"))
+                {
+                    char[] separators = { '|' };
+                    string temp = item.Trim('|');
+                    string[] fields = temp.Split(separators, StringSplitOptions.None);
+
+                    PatientModel patient = new PatientModel();
+                    patient.Id = Int32.Parse(fields[3]);
+                    patient.Name = fields[5];
+                    patient.Address = fields[11];
+                    patient.DOB = fields[7];
+
+                    Console.WriteLine("Patient id: " + patient.Id + ", patient name: " + patient.Name + " patient DOB: " + patient.DOB + 
+                        " and patient address: " + patient.Address);
+
+
+                    Console.WriteLine("Token PID: " + patient.ToString());
+                }
+
             }
 
             //Console.WriteLine("Prima poruku: " + segment);
@@ -77,6 +95,10 @@ namespace HL7SampleListener
             }
             return builder.ToString().TrimEnd(separators);
         }
+
     }
+
+
+
 }
 
