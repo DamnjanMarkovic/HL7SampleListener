@@ -39,7 +39,7 @@ namespace HL7SampleListener
                 // true here make sure that the thread keep listening to the port.
                 while (true)
                 {
-                    buffer = new byte[4096];
+                    buffer = new byte[1000];
 
                     // Take care of incoming connection ...
                     Socket receiver = listener.Accept();
@@ -49,15 +49,18 @@ namespace HL7SampleListener
                     {
                         count = receiver.Receive(buffer);
                         data = Encoding.UTF8.GetString(buffer, 0, count);
+                        //Console.WriteLine("Stize poruka: \n" + data.ToString());
 
                         // Search for a Vertical Tab (VT) character to find start of MLLP frame.
                         start = data.IndexOf((char)0x0b);
-                        if (start >= 0)
+                        //Console.WriteLine("Start je : " + start.ToString());
+                        if ((start >= 0) || (data.StartsWith("MSH")))
                         {
                             // Search for a File Separator (FS) character to find the end of the frame.
-                            end = data.IndexOf((char)0x1c);
-                            if (end > start)
-                            {
+                            //end = data.IndexOf((char)0x1c);
+                            //if (end > start)
+                            //{
+                                
                                 // Remove the MLLP charachters
                                 tempData = Encoding.UTF8.GetString(buffer, 4, count - 12);
                                 // Do what you want with the received message
@@ -68,8 +71,21 @@ namespace HL7SampleListener
                                 receiver.Send(Encoding.UTF8.GetBytes(response));
                                 Console.WriteLine("Acknowledgment sent.");
                                 break;
-                            }
+                            //}
                         }
+
+                        else  
+                        {
+                            Console.WriteLine("Message wrongly formated.");
+                            break;
+                        }
+
+
+                        //else if (start == -1)
+                        //{
+                        //    Console.WriteLine("Acknowledgment sent.");
+                        //    break;
+                        //}
                     }
 
                     // close connection

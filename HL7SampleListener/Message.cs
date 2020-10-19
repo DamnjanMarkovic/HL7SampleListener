@@ -50,10 +50,10 @@ namespace HL7SampleListener
         public void DeSerializeMessage(string msg)
         {
             Initialize();
+            
             var segment = new Segment();
             char[] separator = { '\r' };
             var tokens = msg.Split(separator, StringSplitOptions.None);
-            Console.WriteLine("Tokeni su: " + tokens.ToString());
             foreach (var item in tokens)
             {
                 //var segment = new Segment();
@@ -61,21 +61,28 @@ namespace HL7SampleListener
                 Add(segment);
                 if (item.Contains("PID"))
                 {
+                    Console.WriteLine("Item sa PID-om je: " + item);
                     char[] separators = { '|' };
                     string temp = item.Trim('|');
                     string[] fields = temp.Split(separators, StringSplitOptions.None);
 
                     PatientModel patient = new PatientModel();
-                    patient.Id = Int32.Parse(fields[3]);
-                    patient.Name = fields[5];
-                    patient.Address = fields[11];
+                    //patient.Id = Int32.Parse(fields[3]);
+                    patient.FirstName = fields[5].Split('^')[0];
+                    patient.LastName = fields[5].Split('^')[1];
                     patient.DOB = fields[7];
+                    patient.PhoneNumber = fields[13];
+                    patient.Address = fields[11];
 
-                    Console.WriteLine("Patient id: " + patient.Id + ", patient name: " + patient.Name + " patient DOB: " + patient.DOB + 
-                        " and patient address: " + patient.Address);
 
+                    DataAccess dataAccess = new DataAccess();
 
-                    Console.WriteLine("Token PID: " + patient.ToString());
+                    
+
+                    Console.WriteLine("Patient id: " + patient.Id + ";\nPatient name: " + patient.FirstName + ";\nPatient last name: " + patient.LastName );
+                    
+                    
+                    dataAccess.InsertPatient(patient.FirstName, patient.LastName, patient.DOB, patient.PhoneNumber, patient.Address);
                 }
 
             }

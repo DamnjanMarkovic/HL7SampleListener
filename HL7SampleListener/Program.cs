@@ -11,7 +11,7 @@ namespace HL7SampleListener
     class Program
     {
         private static readonly byte[] Localhost = { 127, 0, 0, 1 };
-        private const int Port = 7777;
+        private const int Port = 1302;
 
         static void Main(string[] args)
         {
@@ -26,9 +26,9 @@ namespace HL7SampleListener
                 listnerThread.Start();
                 // Create another thread for sending HL7 messages
                 // Send Message so that the listening port catches it.
-                Publisher publisher = new Publisher(Localhost, Port);
-                Thread senderThread = new Thread(new ThreadStart(publisher.Send));
-                senderThread.Start();
+                //Publisher publisher = new Publisher(Localhost, Port);
+                //Thread senderThread = new Thread(new ThreadStart(publisher.Send));
+                //senderThread.Start();
        
 
                 

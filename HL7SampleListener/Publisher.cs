@@ -31,8 +31,8 @@ namespace HL7SampleListener
                     sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     sender.Connect(endPoint);
                     byte[] hl7Data = System.IO.File.ReadAllBytes(@"C:\Users\damnj\Documents\HL7Listener\HL7Listener\HL7Listener\Resources\SampleHL7.hl7");
+                    //byte[] hl7Data = System.IO.File.ReadAllBytes(@"C:\Users\damnj\Documents\HL7Listener\HL7Listener\HL7Listener\Resources\SampleHL7.hl7");
                     string result = System.Text.Encoding.UTF8.GetString(hl7Data);
-                    //byte[] hl7Data = System.IO.File.ReadAllBytes(@"D:\HL7Listener\HL7Listener\Resources\SampleHL7.hl7");
                     int dataLength = hl7Data.Length;
                     byte[] dataToSend = new byte[dataLength + 3];
                     dataToSend[0] = 0x0b; // Add a Vertical Tab (VT) character
@@ -43,7 +43,7 @@ namespace HL7SampleListener
                     try
                     {
                         sender.Send(dataToSend);
-                        //Console.WriteLine("Printing message: " + result);
+                        Console.WriteLine("Printing message: " + result);
                         Console.WriteLine("HL7 message sent.");
                     }
                     catch (System.Net.Sockets.SocketException ex)
