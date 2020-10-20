@@ -67,7 +67,7 @@ namespace HL7SampleListener
                     string[] fields = temp.Split(separators, StringSplitOptions.None);
 
                     PatientModel patient = new PatientModel();
-                    //patient.Id = Int32.Parse(fields[3]);
+                    patient.MedicalID = Int32.Parse(fields[3]);
                     patient.FirstName = fields[5].Split('^')[0];
                     patient.LastName = fields[5].Split('^')[1];
                     patient.DOB = fields[7];
@@ -79,10 +79,10 @@ namespace HL7SampleListener
 
                     
 
-                    Console.WriteLine("Patient id: " + patient.Id + ";\nPatient name: " + patient.FirstName + ";\nPatient last name: " + patient.LastName );
+                    Console.WriteLine("Patient id: " + patient.MedicalID + ";\nPatient name: " + patient.FirstName + ";\nPatient last name: " + patient.LastName );
                     
                     
-                    dataAccess.InsertPatient(patient.FirstName, patient.LastName, patient.DOB, patient.PhoneNumber, patient.Address);
+                    dataAccess.InsertPatient(patient.MedicalID, patient.FirstName, patient.LastName, patient.DOB, patient.PhoneNumber, patient.Address);
                 }
 
             }

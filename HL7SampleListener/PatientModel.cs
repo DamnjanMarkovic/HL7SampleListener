@@ -9,7 +9,8 @@ namespace HL7SampleListener
     public class PatientModel
     {
 
-        public int Id { get; set; }
+        public int MedicalID { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DOB { get; set; }
